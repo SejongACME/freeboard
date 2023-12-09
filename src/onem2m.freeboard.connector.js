@@ -4,24 +4,13 @@
         display_name: "ACME Resource Tree",
         description: "Displays text in a black-bordered box.",
         settings: [
-            // {
-            //     name: "title",
-            //     display_name: "Title",
-            //     type: "text"
-            // },
             {
-                name: "Container1",
-                display_name: "Container 1",
+                name: "title",
+                display_name: "SAVE 후 위젯을 클릭해야 확인가능합니다.",
                 type: "text",
-                default_value: "CO2"
+                default_value: "ACME resource tree 확인하기"
             },
-            {
-                name: "Container2",
-                display_name: "Container 2",
-                type: "text",
-                default_value: "O3"
-            },
-            // 여기에 필요한 만큼 컨테이너 추가 예정
+           
         ],
         newInstance: function (settings, newInstanceCallback) {
             console.log(settings);
@@ -40,26 +29,26 @@
     );
 
     freeboard.addStyle('.acme-resource-tree-pane',
-        'border: 2px solid black;' +
         'padding: 10px;' +
-        'position: relative;' +
+        'position: fixed;' +
         'display: inline-block;' +
-        'height: 800px; overflow: visible;' 
+        'height: 100%; overflow: visible;' +
+        'text-align: center;'
     );
 
     var AcmeResourceTree = function (settings) {
         var self = this;
         var currentSettings = settings;
-        // var titleElement = $('<div class="acme-resource-tree-pane"></div>');
-        var container1Element = $('<div class="acme-container-box"></div>').append('<div class="acme-content">' + currentSettings.Container1 + '</div>');
-        var container2Element = $('<div class="acme-container-box"></div>').append('<div class="acme-content">' + currentSettings.Container2 + '</div>');
-        // container3Element, container4Element, ... 추가 예정
+        var titleElement = $('<div class="acme-resource-tree-pane"></div>');
 
         this.render = function (element) {
-            // $(element).append(titleElement);
-            $(element).append(container1Element);
-            $(element).append(container2Element);
-            // container3Element, container4Element, ... 추가 예정
+            $(element).append(titleElement);
+
+            // react - localhost 연결 클릭 핸들러 
+            $(element).on('click', function () {
+                // 여기에서 React 앱 실행 및 포트 변경 로직 수행
+                window.location.href = 'http://localhost:8081';
+            });
 
             self.updateDisplay();
         }
@@ -78,11 +67,8 @@
         }
 
         this.updateDisplay = function () {
-            // title과 Container 데이터 값 표시 
-            // titleElement.text(currentSettings.title);
-            container1Element.find('.acme-content').text(currentSettings.Container1);
-            container2Element.find('.acme-content').text(currentSettings.Container2);
-            // container3Element, container4Element, ... 추가 예정
+            // title 값 표시 
+            titleElement.text(currentSettings.title);
         };
 
         this.onSettingsChanged(settings);

@@ -4429,58 +4429,6 @@ freeboard.loadDatasourcePlugin({
 	freeboard.addStyle('.indicator-light.on', "background-color:#FFC773;box-shadow: 0px 0px 15px #FF9900;border-color:#FDF1DF;");
 	freeboard.addStyle('.indicator-text', "margin-top:10px;");
 
-
-
-	freeboard.loadWidgetPlugin({
-		type_name: "acmeResourceTree",
-		display_name: "ACME Resource Tree",
-		description: "Displays text in a black-bordered box.",
-		settings: [
-			// {
-			//     name: "title",
-			//     display_name: "Title",
-			//     type: "text"
-			// },
-			{
-				name: "Container1",
-				display_name: "Container 1",
-				type: "text",
-				default_value: "CO2"
-			},
-			{
-				name: "Container2",
-				display_name: "Container 2",
-				type: "text",
-				default_value: "O3"
-			},
-			// 여기에 필요한 만큼 컨테이너 추가 예정
-		],
-		newInstance: function (settings, newInstanceCallback) {
-			console.log(settings);
-			newInstanceCallback(new AcmeResourceTree(settings));
-		}
-	});
-	freeboard.addStyle('.acme-container-box',
-        'border: 2px solid yellow;' +
-        'padding: 10px;' +
-        'position: relative;' +
-        'display: inline-block;' +
-        'vertical-align: middle;' +
-        'height: auto;' +
-        'overflow: visible;'
-    );
-
-    freeboard.addStyle('.acme-resource-tree-pane',
-        'border: 2px solid black;' +
-        'padding: 10px;' +
-        'position: relative;' +
-        'display: inline-block;' +
-        'height: 800px; overflow: visible;' 
-    );
-
-
-
-
     var indicatorWidget = function (settings) {
         var self = this;
         var titleElement = $('<h2 class="section-title"></h2>');
