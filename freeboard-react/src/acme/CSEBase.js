@@ -60,10 +60,41 @@ const CSEBase = () => {
     });
   
     const [selectedCategory, setSelectedCategory] = useState("CO"); // 초기값
-  
+
+    // ACME server API 연결 test
     const handleCategoryChange = (category) => {
-      setSelectedCategory(category);
+        setSelectedCategory(category);
+        console.log(category); // 기체 종류
+
+        const url = `http://192.168.219.103:65535/cse-in/${category}/강남구/la`;
+        const headers = {
+            "X-M2M-Origin": "CAdmin",
+            "X-M2M-RI": "nh35k4rdrt",
+            "X-M2M-RVI": "3",
+        };
+
+        const requestOptions = {
+            method: "GET",
+            headers: headers,
+        };
+
+        fetch(url, requestOptions)
+            .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+            })
+            .then((res) => {
+            console.log("container instance data:", res["m2m:cin"].con); // 기체 농도에 해당하는 con 
+            })
+            .catch((error) => {
+            console.error("API 요청 중 오류 발생:", error);
+            });
+        
     };
+
+    
   
     return (
       <Container>
@@ -84,7 +115,7 @@ const CSEBase = () => {
         </div>
         <Paper elevation={3} style={{ padding: "20px" }}>
           <Typography variant="h5" gutterBottom>
-            {selectedCategory} 농도
+            서울특별시 지역별 {selectedCategory} 농도
           </Typography>
           <div>
             {Object.keys(data[selectedCategory]).map((location) => (
@@ -101,3 +132,4 @@ const CSEBase = () => {
   };
   
   export default CSEBase;
+
