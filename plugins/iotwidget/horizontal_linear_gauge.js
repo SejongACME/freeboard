@@ -4,8 +4,8 @@
 //
 
 (function() {
-    var gaugeWidget = function (settings) {
-        var titleElement = $('<h2 class="section-title"></h2>');
+    var gaugeWidget = function(settings) {
+        var titleElement = $('<h2 class="section-title" align="center"></h2>');
         var gaugeElement = $('<div></div>');
 
         var self = this;
@@ -27,23 +27,41 @@
             // yellow rgb(249,200,2) #f9c802
             // red rgb(255,0,0) #ff0000
 
-            if (fillPercent >= 0.5 ) {
+            var R = 0;
+            var G = 127;
+            var B = 255;
+            if (fillPercent > 0.2) {
+                R = 129;
+                G = 193;
+                B = 71;
+            }
+            if (fillPercent > 0.5) {
+                R = 208;
+                G = 179;
+                B = 54;
+            }
+            if (fillPercent > 1) {
+                R = 255;
+                G = 0;
+                B = 0;
+            }
+            /*
+            if (fillPercent >= 0.5) {
                 fillPercent = 2 * fillPercent - 1;
                 var R = fillPercent * 255 + (1 - fillPercent) * 249;
                 var G = fillPercent * 0 + (1 - fillPercent) * 200;
                 var B = fillPercent * 0 + (1 - fillPercent) * 2;
-            }
-            else {
+            } else {
                 fillPercent = 2 * fillPercent;
                 var R = fillPercent * 249 + (1 - fillPercent) * 169;
                 var G = fillPercent * 200 + (1 - fillPercent) * 215;
                 var B = fillPercent * 2 + (1 - fillPercent) * 11;
             }
-
+            */
             return "rgb(" + Math.round(R) + "," + Math.round(G) + "," + Math.round(B) + ")"
         }
 
-        self.render = function (element) {
+        self.render = function(element) {
             $(element).append(titleElement.html(currentSettings.title)).append(gaugeElement);
 
             width = gaugeElement.width();
@@ -95,7 +113,7 @@
 
             unitsText.attr({
                 "font-family": "arial",
-                "font-size": "10",
+                "font-size": "15",
                 "font-weight": "normal",
                 "fill": "#b3b3b3",
                 "text-anchor": "middle"
@@ -105,46 +123,55 @@
             gaugeFill = paper.rect(width / 2 - gaugeWidth / 2, height / 3 - gaugeHeight / 2, 0, gaugeHeight);
         }
 
-        self.onSettingsChanged = function (newSettings) {
+        self.onSettingsChanged = function(newSettings) {
             if (newSettings.units != currentSettings.units || newSettings.min_value != currentSettings.min_value || newSettings.max_value != currentSettings.max_value) {
                 currentSettings = newSettings;
-                var units = _.isUndefined(currentSettings.units) ? "" : currentSettings.units;
+                var units = "좋음";
                 var min = _.isUndefined(currentSettings.min_value) ? 0 : currentSettings.min_value;
                 var max = _.isUndefined(currentSettings.max_value) ? 0 : currentSettings.max_value;
 
-                unitsText.attr({"text": units});
-                minValueLabel.attr({"text": min});
-                maxValueLabel.attr({"text": max});
-            }
-            else {
+                unitsText.attr({ "text": units });
+                minValueLabel.attr({ "text": min });
+                maxValueLabel.attr({ "text": max });
+            } else {
                 currentSettings = newSettings;
             }
 
             titleElement.html(newSettings.title);
         }
 
-        self.onCalculatedValueChanged = function (settingName, newValue) {
+        self.onCalculatedValueChanged = function(settingName, newValue) {
             if (settingName === "value") {
                 if (!_.isUndefined(gaugeFill) && !_.isUndefined(valueText)) {
 
                     newValue = _.isUndefined(newValue) ? 0 : newValue;
-                    var fillVal = 160 * (newValue - currentSettings.min_value)/(currentSettings.max_value - currentSettings.min_value);
+                    var fillVal = 160 * (newValue - currentSettings.min_value) / (currentSettings.max_value - currentSettings.min_value);
 
                     fillVal = fillVal > 160 ? 160 : fillVal;
                     fillVal = fillVal < 0 ? 0 : fillVal;
 
                     var fillColor = getColor(fillVal / 160);
+                    var units = "좋음";
+                    if ((fillVal / 160) > 0.2) {
+                        units = "보통";
+                    }
+                    if ((fillVal / 160) > 0.5) {
+                        units = "나쁨";
+                    }
+                    if ((fillVal / 160) > 1) {
+                        units = "매우나쁨";
+                    }
 
-                    gaugeFill.animate({"width": fillVal, "fill": fillColor, "stroke": fillColor}, 500, ">");
-                    valueText.attr({"text": newValue});
+                    gaugeFill.animate({ "width": fillVal, "fill": fillColor, "stroke": fillColor }, 500, ">");
+                    valueText.attr({ "text": newValue });
+                    unitsText.attr({ "text": units });
                 }
             }
         }
 
-        self.onDispose = function () {
-        }
+        self.onDispose = function() {}
 
-        self.getHeight = function () {
+        self.getHeight = function() {
             return 3;
         }
 
@@ -153,13 +180,12 @@
     freeboard.loadWidgetPlugin({
         type_name: "horizontal-linear-gauge",
         display_name: "Horizontal Linear Gauge",
-        "external_scripts" : [
-         "plugins/thirdparty/raphael.2.1.0.min.js",
-         //   "plugins/thirdparty/raphael.2.1.0-custom.js",
-        "plugins/thirdparty/colormix.2.0.0.min.js"
+        "external_scripts": [
+            "plugins/thirdparty/raphael.2.1.0.min.js",
+            //   "plugins/thirdparty/raphael.2.1.0-custom.js",
+            "plugins/thirdparty/colormix.2.0.0.min.js"
         ],
-        settings: [
-            {
+        settings: [{
                 name: "title",
                 display_name: "Title",
                 type: "text"
@@ -187,7 +213,7 @@
                 default_value: 100
             }
         ],
-        newInstance: function (settings, newInstanceCallback) {
+        newInstance: function(settings, newInstanceCallback) {
             newInstanceCallback(new gaugeWidget(settings));
         }
     });
