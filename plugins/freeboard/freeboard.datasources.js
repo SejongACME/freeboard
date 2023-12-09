@@ -54,7 +54,8 @@
 
 			$.ajax({
 				url: requestURL,
-				dataType: (errorStage == 1) ? "JSONP" : "JSON",
+				// dataType: (errorStage == 1) ? "JSONP" : "JSON",
+				dataType: "JSON",
 				type: currentSettings.method || "GET",
 				data: body,
 				beforeSend: function (xhr) {
@@ -170,6 +171,14 @@
 			}
 		],
 		newInstance: function (settings, newInstanceCallback, updateCallback) {
+			var customHeaders = {};
+			if (settings.headers && Array.isArray(settings.headers)) {
+				settings.headers.forEach(function (header) {
+					if (header.name && header.value) {
+						customHeaders[header.name] = header.value;
+					}
+				});
+			}
 			newInstanceCallback(new jsonDatasource(settings, updateCallback));
 		}
 	});
