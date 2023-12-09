@@ -1,19 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-    Container,
-    Paper,
-    Typography,
-    Button,
-    Switch,
-    Fade,
-    Input,
-    TextField,
-  } from "@mui/material";
+import CSEBase from './../acme/CSEBase';
+import SejongUniv from './SejongUniv';
 
-  export default function SourceTreeBox() {
-    return (
-        <div>
-            <h1 style={{ color: "black" }}>test</h1>
-        </div>
-    )
-  };
+export default function SourceTreeBox() {
+  return (
+      <div>
+          <div style = {{marginTop : "20px"}}></div>
+          <SejongUniv />
+          <div style = {{marginTop : "30px"}}></div>
+          <CSEBase />
+      </div>
+  )
+};
