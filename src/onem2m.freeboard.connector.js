@@ -13,13 +13,13 @@
                 name: "Container1",
                 display_name: "Container 1",
                 type: "text",
-                default_value: "CO2" 
+                default_value: "CO2"
             },
             {
                 name: "Container2",
                 display_name: "Container 2",
                 type: "text",
-                default_value: "O3" 
+                default_value: "O3"
             },
             // 여기에 필요한 만큼 컨테이너 추가 예정
         ],
@@ -29,24 +29,22 @@
         }
     });
 
-  
     freeboard.addStyle('.acme-container-box',
         'border: 2px solid yellow;' +
-        'padding: 10px;' + 
-		'position: relative;' +
+        'padding: 10px;' +
+        'position: relative;' +
         'display: inline-block;' +
-		'vertical-align: middle;' +
-        'height: auto;' + 
-        'overflow: visible;' 
-    );
-    
-    freeboard.addStyle('.acme-resource-tree-pane',
-        'border: 2px solid black;' +
-        'padding: 10px;' + 
-		'position: relative;' +
-        'display: inline-block;' +
+        'vertical-align: middle;' +
         'height: auto;' +
         'overflow: visible;'
+    );
+
+    freeboard.addStyle('.acme-resource-tree-pane',
+        'border: 2px solid black;' +
+        'padding: 10px;' +
+        'position: relative;' +
+        'display: inline-block;' +
+        'height: 800px; overflow: visible;' 
     );
 
     var AcmeResourceTree = function (settings) {
@@ -90,4 +88,3 @@
         this.onSettingsChanged(settings);
     };
 }());
-
