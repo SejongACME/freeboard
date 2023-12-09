@@ -110,8 +110,16 @@ const CSEBase = () => {
         });
     };
 
-
+    useEffect(() => {
+        handleContainerChange(selectedContainer);
     
+        const intervalId = setInterval(() => {
+          handleContainerChange(selectedContainer);
+        }, 3600000);
+    
+        return () => clearInterval(intervalId);
+      }, [selectedContainer]); 
+
   
     return (
       <Container>
@@ -119,14 +127,14 @@ const CSEBase = () => {
           CSEBase
         </Typography>
         <div style={{ display: "flex", marginBottom: "20px" }}>
-          {Object.keys(data).map((Container) => (
+          {Object.keys(data).map((gasContainer) => (
             <Button
-              key={Container}
-              onClick={() => handleContainerChange(Container)}
-              variant={selectedContainer === Container ? "contained" : "outlined"}
+              key={gasContainer}
+              onClick={() => handleContainerChange(gasContainer)}
+              variant={selectedContainer === gasContainer ? "contained" : "outlined"}
               style={{ marginRight: "10px" }}
             >
-              {Container}
+              {gasContainer}
             </Button>
           ))}
         </div>
