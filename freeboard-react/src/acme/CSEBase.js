@@ -131,18 +131,18 @@ const CSEBase = () => {
           ))}
         </div>
         <Paper elevation={3} style={{ padding: "20px" }}>
-          <Typography variant="h5" gutterBottom>
-            서울특별시 지역별 {selectedContainer} 농도
-          </Typography>
-          <div>
-            {Object.keys(data[selectedContainer]).map((location) => (
-              <div key={location}>
-                <Typography variant="subtitle1">
-                  {location}: {data[selectedContainer][location]}
-                </Typography>
-              </div>
-            ))}
-          </div>
+            <Typography variant="h5" gutterBottom>
+                {selectedContainer} 농도
+            </Typography>
+            <div>
+                {["강남구", "광진구", "성동구", "송파구", "중구"].map((locationContainer) => (
+                    <div key={locationContainer}>
+                        <Typography variant="subtitle1">
+                            {locationContainer}: {data[selectedContainer][locationContainer]}
+                        </Typography>
+                    </div>
+                ))}
+            </div>
         </Paper>
       </Container>
     );
