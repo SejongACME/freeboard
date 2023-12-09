@@ -61,6 +61,12 @@
             $(element).append(container2Element);
             // container3Element, container4Element, ... 추가 예정
 
+            // react - localhost 연결 클릭 핸들러 
+            $(element).on('click', function () {
+                // 여기에서 React 앱 실행 및 포트 변경 로직 수행
+                window.location.href = 'http://localhost:8081';
+            });
+
             self.updateDisplay();
         }
 
