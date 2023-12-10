@@ -1,7 +1,8 @@
-(function () {
+// ACME와 연동하여 ACME의 resource tree를 보여주기 위해 freeboard 환경에 적합한 위젯을 구현
+(function () { 
     freeboard.loadWidgetPlugin({
         type_name: "acmeResourceTree",
-        display_name: "ACME Resource Tree",
+        display_name: "ACME Resource Tree", // 위젯 선택 메뉴에 뜨는 설명 초기화
         description: "Displays text in a black-bordered box.",
         settings: [
             {
@@ -28,7 +29,7 @@
         'overflow: visible;'
     );
 
-    freeboard.addStyle('.acme-resource-tree-pane',
+    freeboard.addStyle('.acme-resource-tree-pane', // 안내 문구에 대한 css 구성
         'padding: 10px;' +
         'position: fixed;' +
         'display: inline-block;' +
@@ -44,9 +45,8 @@
         this.render = function (element) {
             $(element).append(titleElement);
 
-            // react - localhost 연결 클릭 핸들러 
+            // ACME Resource Tree 위젯 클릭 시 리액트 서버로 이동 처리 구현
             $(element).on('click', function () {
-                // 여기에서 React 앱 실행 및 포트 변경 로직 수행
                 window.location.href = 'http://localhost:8081';
             });
 

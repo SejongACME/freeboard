@@ -63,7 +63,6 @@ const CSEBase = () => {
 
     const handleContainerChange = (gasContainer) => {
         setSelectedContainer(gasContainer);
-        console.log(gasContainer);  
     
         const locationsContainer = ["강남구", "광진구", "성동구", "송파구", "중구"];
         
@@ -71,7 +70,6 @@ const CSEBase = () => {
     
         locationsContainer.forEach((locationContainer) => {
             const url = `http://192.168.219.103:65535/cse-in/${gasContainer}/${locationContainer}/la`;
-            console.log(url);
             const headers = {
                 "X-M2M-Origin": "CAdmin",
                 "X-M2M-RI": "nh35k4rdrt",
@@ -157,4 +155,3 @@ const CSEBase = () => {
   };
   
   export default CSEBase;
-
